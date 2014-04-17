@@ -1,7 +1,14 @@
-<?php
-    $taxonomy_tag = ''; //Use slug
-    $taxonomy_category = ''; // User category
-?>
+add_shortcode( 'dwqa-list-questions-with-taxonomy', 'dwqa_archive_question_shortcode' )
+function dwqa_archive_question_shortcode( $atts ) {
+    global $script_version, $dwqa_sript_vars;
+    
+    extract( shortcode_atts( array(
+        'taxonomy_category' => '',//Use slug
+        'taxonomy_tag' => '',//Use slug
+    ), $atts, 'bartag' ) );
+    
+    ob_start( array( $this, 'sanitize_output' ) );
+    ?>
         <div class="dwqa-container" >
             <div id="archive-question" class="dw-question">
                 <div class="dwqa-list-question">
@@ -266,3 +273,10 @@
                 </div>
             </div>
         </div>
+        <?php
+        $html = ob_get_contents();
+        ob_end_clean();
+        wp_enqueue_script( 'dwqa-questions-list', DWQA_URI . 'inc/templates/default/assets/js/dwqa-questions-list.js', array( 'jquery' ), $script_version, true );
+        wp_localize_script( 'dwqa-questions-list', 'dwqa', $dwqa_sript_vars );
+        return $html;
+    }
