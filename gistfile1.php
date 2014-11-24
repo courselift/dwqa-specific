@@ -1,4 +1,4 @@
-add_shortcode( 'dwqa-list-questions-with-taxonomy', 'dwqa_archive_question_shortcode' )
+add_shortcode( 'dwqa-list-questions-with-taxonomy', 'dwqa_archive_question_shortcode' );
 function dwqa_archive_question_shortcode( $atts ) {
     global $script_version, $dwqa_sript_vars;
     
